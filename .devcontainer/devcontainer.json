@@ -1,0 +1,8 @@
+{
+  "name": "VNC with noVNC",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "forwardPorts": [5000, 6080],
+  "postCreateCommand": "bash setup.sh"
+}
