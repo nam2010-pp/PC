@@ -3,7 +3,7 @@
 echo "[+] Cập nhật và cài gói cần thiết..."
 pkg update -y
 pkg install -y x11-repo
-pkg install -y tigervnc lxde-core git python wget
+pkg install -y tigervnc git python wget lxqt
 pip install websockify
 
 echo "[+] Clone noVNC..."
@@ -12,11 +12,11 @@ cd noVNC
 git submodule update --init --recursive
 cd ..
 
-echo "[+] Cấu hình VNC (LXDE)..."
+echo "[+] Cấu hình VNC (LXQt)..."
 mkdir -p ~/.vnc
 cat > ~/.vnc/xstartup <<EOF
 #!/data/data/com.termux/files/usr/bin/bash
-lxsession &
+startlxqt &
 EOF
 chmod +x ~/.vnc/xstartup
 
