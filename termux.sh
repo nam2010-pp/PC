@@ -3,9 +3,9 @@
 echo "[+] Cập nhật và cài gói cần thiết..."
 pkg update -y
 pkg install -y x11-repo
-pkg install -y tigervnc lxqt novnc firefox python
+pkg install -y tigervnc lxqt firefox git
 
-echo "[+] Tạo thư mục ~/.vnc và cấu hình khởi động LXQt..."
+echo "[+] Tạo file khởi động VNC với LXQt..."
 mkdir -p ~/.vnc
 cat > ~/.vnc/xstartup <<EOF
 #!/data/data/com.termux/files/usr/bin/bash
@@ -13,13 +13,13 @@ startlxqt &
 EOF
 chmod +x ~/.vnc/xstartup
 
-echo "[+] Khởi động VNC lần đầu để tạo cấu hình..."
+echo "[+] Khởi động VNC lần đầu..."
 vncserver :1
 sleep 2
 vncserver -kill :1
 
-echo "[+] Tạo icon Firefox trên desktop LXQt..."
-mkdir -p ~/.config/autostart ~/.local/share/applications ~/Desktop
+echo "[+] Tạo icon Firefox trên Desktop..."
+mkdir -p ~/.local/share/applications ~/Desktop
 
 cat > ~/.local/share/applications/firefox.desktop <<EOF
 [Desktop Entry]
@@ -36,15 +36,22 @@ EOF
 cp ~/.local/share/applications/firefox.desktop ~/Desktop/
 chmod +x ~/Desktop/firefox.desktop
 
+echo "[+] Clone noVNC + websockify..."
+git clone https://github.com/novnc/noVNC ~/noVNC
+cd ~/noVNC
+git clone https://github.com/novnc/websockify
+cd ~
+
 echo "[+] Khởi động lại VNC..."
 vncserver :1
 
-echo "[+] Mở noVNC..."
-DISPLAY=:1 websockify --web=/data/data/com.termux/files/usr/share/novnc 6080 localhost:5901 &
+echo "[+] Mở noVNC proxy..."
+cd ~/noVNC
+DISPLAY=:1 ./utils/novnc_proxy --vnc localhost:5901 --listen 6080 &
 
 echo
-echo "[✓] Xong! Mở trình duyệt vào:"
+echo "[✓] XONG! Mở trình duyệt vào link sau:"
 echo "    http://localhost:6080/vnc.html"
 echo
-echo "[!] Để tắt:"
-echo "    vncserver -kill :1 && pkill websockify"
+echo "[!] Tắt bằng:"
+echo "    vncserver -kill :1 && pkill -f novnc_proxy"
