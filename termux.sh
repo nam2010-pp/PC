@@ -3,13 +3,14 @@
 echo "[+] Cập nhật và cài gói cần thiết..."
 pkg update -y
 pkg install -y x11-repo
-pkg install -y tigervnc lxqt firefox git
+pkg install -y tigervnc xfce4 xfce4-goodies firefox git
 
-echo "[+] Tạo file khởi động VNC với LXQt..."
+echo "[+] Tạo file khởi động VNC với XFCE4..."
 mkdir -p ~/.vnc
 cat > ~/.vnc/xstartup <<EOF
 #!/data/data/com.termux/files/usr/bin/bash
-startlxqt &
+xrdb $HOME/.Xresources
+startxfce4 &
 EOF
 chmod +x ~/.vnc/xstartup
 
