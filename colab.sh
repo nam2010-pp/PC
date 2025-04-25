@@ -44,7 +44,7 @@ rm cloudflared.deb
 
 echo "[+] Chạy x11vnc + websockify + cloudflared..."
 DISPLAY=:19 x11vnc -display :19 -rfbport 5919 -forever -nopw -bg
-~/novnc/websockify/run 8080 localhost:5919 &
+~/novnc/websockify/run 8090 localhost:5919 &
 
 echo "[+] Mở Cloudflared Tunnel..."
-cloudflared tunnel --url http://localhost:8080 --no-autoupdate
+cloudflared tunnel --url http://localhost:8090 --no-autoupdate
