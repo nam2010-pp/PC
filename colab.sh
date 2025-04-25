@@ -1,15 +1,17 @@
 #!/bin/bash
 
 echo "[+] Cài gói cần thiết..."
-apt update -y && apt install -y \
-  xfce4 xfce4-goodies tightvncserver x11vnc \
-  firefox novnc websockify wget curl -y
+apt update && apt install -y xfce4 xfce4-goodies tightvncserver x11vnc firefox xterm wget unzip curl
 
-echo "[+] Cài Cloudflared..."
-wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-dpkg -i cloudflared-linux-amd64.deb || apt --fix-broken install -y
+echo "[+] Cài noVNC và Websockify..."
+mkdir -p ~/novnc
+cd ~/novnc
+wget https://github.com/novnc/noVNC/archive/refs/heads/master.zip
+unzip master.zip && mv noVNC-master/* . && rm -rf noVNC-master master.zip
+git clone https://github.com/novnc/websockify
+cd ~
 
-echo "[+] Cấu hình XFCE4 cho VNC..."
+echo "[+] Tạo ~/.vnc/xstartup cho XFCE4..."
 mkdir -p ~/.vnc
 cat > ~/.vnc/xstartup <<EOF
 #!/bin/bash
@@ -18,7 +20,7 @@ startxfce4 &
 EOF
 chmod +x ~/.vnc/xstartup
 
-echo "[+] Tạo shortcut Firefox..."
+echo "[+] Tạo icon Firefox..."
 mkdir -p ~/.local/share/applications
 cat > ~/.local/share/applications/firefox.desktop <<EOF
 [Desktop Entry]
@@ -26,22 +28,23 @@ Version=1.0
 Name=Firefox
 Exec=firefox %u
 Icon=firefox
+Terminal=false
 Type=Application
 Categories=Network;WebBrowser;
 EOF
 chmod +x ~/.local/share/applications/firefox.desktop
 
-echo "[+] Khởi tạo VNC session..."
+echo "[+] Start VNC với :19..."
 vncserver :19 && vncserver -kill :19
 
-echo "[+] Khởi động x11vnc và websockify..."
-x11vnc -display :19 -forever -nopw -bg
-websockify --web=/usr/share/novnc/ 6080 localhost:5919 &
+echo "[+] Cài cloudflared..."
+wget -O cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+dpkg -i cloudflared.deb || apt --fix-broken install -y && dpkg -i cloudflared.deb
+rm cloudflared.deb
 
-echo "[+] Mở Cloudflare Tunnel..."
-cloudflared tunnel --url http://localhost:6080 --no-autoupdate > log.txt 2>&1 &
+echo "[+] Chạy x11vnc + websockify + cloudflared..."
+DISPLAY=:19 x11vnc -display :19 -rfbport 5919 -forever -nopw -bg
+~/novnc/websockify/run 8080 localhost:5919 &
 
-echo "[✓] Đợi tạo link công khai..."
-sleep 10
-cat log.txt | grep -o 'https://[a-zA-Z0-9.-]*trycloudflare.com'
-echo "[✓] Truy cập VNC qua noVNC tại link trên: /vnc.html"
+echo "[+] Mở Cloudflared Tunnel..."
+cloudflared tunnel --url http://localhost:8080 --no-autoupdate
