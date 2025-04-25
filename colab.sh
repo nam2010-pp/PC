@@ -1,5 +1,5 @@
 #!/bin/bash
-
+export USER=$(whoami)
 echo "[+] Cài gói cần thiết..."
 apt update && apt install -y xfce4 xfce4-goodies tightvncserver x11vnc firefox xterm wget unzip curl
 
