@@ -5,11 +5,11 @@ Cài XFCE4 cực nhanh, tối ưu cho máy yếu.
 
 Hỗ trợ truy cập bằng VNC Viewer hoặc trình duyệt web (noVNC).
 
-Tích hợp cloudflared để mở cổng public free.
+chỉ cần truy cập localhost:8080 (trên Termux) vps cần mở port hoặc dùng cloud flared
 
 Tự động cài trình duyệt (Firefox).
 
-Full auto, không cần chọn vùng hay bàn phím.
+Full auto. Chỉ cần chọn vùng và bàn phím.
 📦 Các script chính
 Tên Script	Mô tả
 termux.sh	Dành cho Termux Android, setup Ubuntu GUI + noVNC.
