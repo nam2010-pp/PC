@@ -19,7 +19,6 @@ apt install -y \
   ca-certificates libgtk-3-0 libdbus-glib-1-2 libxt6
 
 locale-gen en_US.UTF-8
- ───────────────────────────────────────────────────────────
 # 4) Cấu hình VNC (mật khẩu 123456)
 echo "[*] Configuring VNC password and xstartup..."
 mkdir -p "$HOME/.vnc"
