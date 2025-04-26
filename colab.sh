@@ -19,17 +19,7 @@ apt install -y \
   ca-certificates libgtk-3-0 libdbus-glib-1-2 libxt6
 
 locale-gen en_US.UTF-8
-
-# ───────────────────────────────────────────────────────────
-# 3) Thêm repo & cài Vivaldi
-echo "[*] Adding Vivaldi repo and installing vivaldi-stable..."
-curl -fsSL https://repo.vivaldi.com/archive/linux_signing_key.pub \
-  | gpg --dearmor -o /usr/share/keyrings/vivaldi.gpg
-echo "deb [signed-by=/usr/share/keyrings/vivaldi.gpg] https://repo.vivaldi.com/archive/deb/ stable main" \
-  > /etc/apt/sources.list.d/vivaldi.list
-apt update -y && apt install -y vivaldi-stable
-
-# ───────────────────────────────────────────────────────────
+ ───────────────────────────────────────────────────────────
 # 4) Cấu hình VNC (mật khẩu 123456)
 echo "[*] Configuring VNC password and xstartup..."
 mkdir -p "$HOME/.vnc"
