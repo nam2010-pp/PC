@@ -22,5 +22,5 @@ mv cloudflared /usr/local/bin/
 echo "[+] Bắt đầu x11vnc + websockify..."
 x11vnc -display :2 -forever -nopw -bg
 websockify --web=/usr/share/novnc/ 8090 localhost:5902 &
-
+cloudflared tunnel --url http://localhost:8090 --no-autoupdate
 echo "[✓] Xong rồi! Mở trình duyệt vào: http://<IP-của-ông>:8090"
