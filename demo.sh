@@ -15,7 +15,10 @@ EOF
 chmod +x ~/.vnc/xstartup
 echo "[+] Khởi tạo VNC lần đầu và kill để reset..."
 vncserver :2 && vncserver -kill :2
-
+echo "[+] Cài Cloudflared..."
+wget -O cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+chmod +x cloudflared
+mv cloudflared /usr/local/bin/
 echo "[+] Bắt đầu x11vnc + websockify..."
 x11vnc -display :2 -forever -nopw -bg
 websockify --web=/usr/share/novnc/ 8090 localhost:5902 &
