@@ -33,10 +33,10 @@ Xvfb :1 -screen 0 1024x768x24 &
 sleep 2
 vncserver :1
 x11vnc -display :1 -nopw -forever -bg
-websockify --web=/usr/share/novnc/ 8080 localhost:5901 &
+websockify --web=/usr/share/novnc/ 8090 localhost:5901 &
 
 echo "[+] Đang khởi chạy Cloudflared Tunnel..."
-cloudflared tunnel --url http://localhost:8080 --no-autoupdate
+cloudflared tunnel --url http://localhost:8090 --no-autoupdate
 EOF
 chmod +x ~/start_gui.sh
 
