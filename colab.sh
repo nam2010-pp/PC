@@ -30,7 +30,7 @@ EOF
 chmod +x ~/.vnc/xstartup
 
 echo "[+] Tạo script khởi động GUI và Cloudflared..."
-cat > ~/start_gui.sh <<EOF
+cat > ~/start.sh <<EOF
 #!/bin/bash
 export DISPLAY=:1
 export USER=root
@@ -45,14 +45,14 @@ vncserver :19
 x11vnc -display :19 -nopw -forever -bg
 
 # noVNC qua websockify
-websockify --web=/usr/share/novnc/ 8080 localhost:5919 &
+websockify --web=/usr/share/novnc/ 8090 localhost:5919 &
 
 # Tạo tunnel Cloudflare
 echo "[+] Đang khởi chạy Cloudflared Tunnel..."
-cloudflared tunnel --url http://localhost:8080 --no-autoupdate
+cloudflared tunnel --url http://localhost:8090 --no-autoupdate
 EOF
 
-chmod +x ~/start_gui.sh
+chmod +x ~/start.sh
 
 echo "[✓] Xong rồi! Chạy GUI bằng lệnh:"
-echo "    bash ~/start_gui.sh"
+echo "    bash ~/start.sh"
