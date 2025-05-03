@@ -5,7 +5,7 @@ pkg update -y && pkg upgrade -y
 pkg install x11-repo -y
 pkg upgrade -y
 pkg install root-repo -y
-pkg install -y x11-repo tigervnc xfce4 xterm dbus 
+pkg install -y x11-repo tigervnc xfce4 xfce4-goodies xterm dbus 
 
 echo "[+] Tạo file xstartup..."
 mkdir -p ~/.vnc
