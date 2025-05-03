@@ -2,7 +2,10 @@
 
 echo "[+] Cập nhật gói và cài XFCE + VNC..."
 pkg update -y && pkg upgrade -y
-pkg install -y x11-repo tigervnc xfce4 xterm dbus x11-repo root-repo
+pkg install x11-repo -y
+pkg upgrade -y
+pkg install root-repo -y
+pkg install -y x11-repo tigervnc xfce4 xterm dbus 
 
 echo "[+] Tạo file xstartup..."
 mkdir -p ~/.vnc
