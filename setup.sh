@@ -4,7 +4,10 @@ echo "[+] Cập nhật gói và cài xfce4, VNC, noVNC, Firefox..."
 sudo apt update && sudo apt install -y \
   xfce4 xfce4-goodies x11vnc novnc websockify \
   tightvncserver firefox xterm
-
+  curl -SsL https://playit-cloud.github.io/ppa/key.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/playit.gpg >/dev/null
+echo "deb [signed-by=/etc/apt/trusted.gpg.d/playit.gpg] https://playit-cloud.github.io/ppa/data ./" | sudo tee /etc/apt/sources.list.d/playit-cloud.list
+sudo apt update
+sudo apt install playit
 echo "[+] Tạo file ~/.vnc/xstartup với XFCE4..."
 mkdir -p ~/.vnc
 cat > ~/.vnc/xstartup <<EOF
