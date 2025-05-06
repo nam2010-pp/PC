@@ -49,4 +49,4 @@ jobs:
         cat playit.log | grep https || tail playit.log
 
     - name: Giữ cho workflow sống
-      run: sleep 10800
+      run: sleep 108000
