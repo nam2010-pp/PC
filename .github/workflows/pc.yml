@@ -1,58 +1,52 @@
-name: Playit GUI Tunnel (Ubuntu XFCE + noVNC)
+name: Ubuntu GUI + noVNC + Playit
 
 on:
   workflow_dispatch:
 
 jobs:
-  ubuntu-gui-playit:
+  run-ubuntu-gui:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Cài XFCE + noVNC + Firefox
+    - name: Cài Desktop + Tools
       run: |
-        echo "[+] Cài desktop + tools..."
         sudo apt update && sudo apt install -y \
           xfce4 xfce4-goodies x11vnc novnc websockify \
           tightvncserver firefox xterm curl gpg
 
-    - name: Cài Playit
+    - name: Cài Playit Agent
       run: |
-        echo "[+] Thêm repo Playit..."
         curl -SsL https://playit-cloud.github.io/ppa/key.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/playit.gpg >/dev/null
         echo "deb [signed-by=/etc/apt/trusted.gpg.d/playit.gpg] https://playit-cloud.github.io/ppa/data ./" | sudo tee /etc/apt/sources.list.d/playit-cloud.list
         sudo apt update && sudo apt install -y playit
 
-    - name: Cấu hình Desktop và VNC
+    - name: Cấu hình VNC + XFCE
       run: |
-        echo "[+] Cấu hình XFCE cho VNC..."
         mkdir -p ~/.vnc
+        echo -e "123456\n123456\nn" | vncpasswd
+
         echo '#!/bin/bash' > ~/.vnc/xstartup
         echo 'xrdb $HOME/.Xresources' >> ~/.vnc/xstartup
         echo 'startxfce4 &' >> ~/.vnc/xstartup
         chmod +x ~/.vnc/xstartup
 
-        echo "[+] Tạo shortcut Firefox..."
-        mkdir -p ~/.local/share/applications
-        echo '[Desktop Entry]' > ~/.local/share/applications/firefox.desktop
-        echo 'Version=1.0' >> ~/.local/share/applications/firefox.desktop
-        echo 'Name=Firefox' >> ~/.local/share/applications/firefox.desktop
-        echo 'GenericName=Web Browser' >> ~/.local/share/applications/firefox.desktop
-        echo 'Exec=firefox %u' >> ~/.local/share/applications/firefox.desktop
-        echo 'Icon=firefox' >> ~/.local/share/applications/firefox.desktop
-        echo 'Terminal=false' >> ~/.local/share/applications/firefox.desktop
-        echo 'Type=Application' >> ~/.local/share/applications/firefox.desktop
-        echo 'Categories=Network;WebBrowser;' >> ~/.local/share/applications/firefox.desktop
-        chmod +x ~/.local/share/applications/firefox.desktop
+        vncserver :1
+        vncserver -kill :1
 
-        echo "[+] Khởi tạo VNC lần đầu..."
-        vncserver :1 && vncserver -kill :1
-
-        echo "[+] Khởi động x11vnc + noVNC..."
-        x11vnc -display :1 -forever -nopw -bg
+    - name: Khởi động GUI + VNC + noVNC
+      run: |
+        export DISPLAY=:1
+        vncserver :1
+        sleep 5
+        x11vnc -display :1 -nopw -forever -bg
         websockify --web=/usr/share/novnc/ 8080 localhost:5901 &
 
-    - name: Bật Playit tunnel
-      run: playit start &
+    - name: Chạy Playit tunnel
+      run: |
+        playit start > playit.log &
+        sleep 10
+        echo "[+] Link từ playit:"
+        cat playit.log | grep https || tail playit.log
 
-    - name: Giữ phiên hoạt động
+    - name: Giữ cho workflow sống
       run: sleep 10800
