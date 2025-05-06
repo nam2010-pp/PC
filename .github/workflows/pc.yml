@@ -23,26 +23,22 @@ jobs:
 
         echo "[+] Cấu hình VNC + xstartup XFCE..."
         mkdir -p ~/.vnc
-        cat > ~/.vnc/xstartup <<EOF
-#!/bin/bash
-xrdb \$HOME/.Xresources
-startxfce4 &
-EOF
+        echo '#!/bin/bash' > ~/.vnc/xstartup
+        echo 'xrdb $HOME/.Xresources' >> ~/.vnc/xstartup
+        echo 'startxfce4 &' >> ~/.vnc/xstartup
         chmod +x ~/.vnc/xstartup
 
         echo "[+] Thêm shortcut Firefox nếu cần..."
         mkdir -p ~/.local/share/applications
-        cat > ~/.local/share/applications/firefox.desktop <<EOF
-[Desktop Entry]
-Version=1.0
-Name=Firefox
-GenericName=Web Browser
-Exec=firefox %u
-Icon=firefox
-Terminal=false
-Type=Application
-Categories=Network;WebBrowser;
-EOF
+        echo '[Desktop Entry]' > ~/.local/share/applications/firefox.desktop
+        echo 'Version=1.0' >> ~/.local/share/applications/firefox.desktop
+        echo 'Name=Firefox' >> ~/.local/share/applications/firefox.desktop
+        echo 'GenericName=Web Browser' >> ~/.local/share/applications/firefox.desktop
+        echo 'Exec=firefox %u' >> ~/.local/share/applications/firefox.desktop
+        echo 'Icon=firefox' >> ~/.local/share/applications/firefox.desktop
+        echo 'Terminal=false' >> ~/.local/share/applications/firefox.desktop
+        echo 'Type=Application' >> ~/.local/share/applications/firefox.desktop
+        echo 'Categories=Network;WebBrowser;' >> ~/.local/share/applications/firefox.desktop
         chmod +x ~/.local/share/applications/firefox.desktop
 
         echo "[+] Khởi tạo VNC và kill để reset..."
