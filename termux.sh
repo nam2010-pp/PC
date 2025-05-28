@@ -42,7 +42,7 @@ echo "[+] Khởi động lại VNC..."
 vncserver :1
 
 echo "[+] mở display"
-DISPLAY=:1 1280x720
+DISPLAY=:1 1920x1080
 echo
 echo "✅ XONG! Truy cập giao diện tại:"
 echo
