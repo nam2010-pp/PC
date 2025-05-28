@@ -6,7 +6,7 @@
 
 ## Yêu cầu😈
 
-- Cài Termux từ F-Droid(https://f-droid.org/packages/com.termux/)
+- Cài Termux từ F-Droid(https://f-droid.org/packages/com.termux/) hoặc googleplay
 - Có mạng ổn định
 - Android chưa root cũng chạy được
 
