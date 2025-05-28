@@ -1,30 +1,37 @@
-🖥️ Ubuntu GUI + noVNC siêu nhẹ cho Termux/github codespaces
-Repo này chứa các script tự động setup nhanh môi trường Ubuntu có giao diện đồ họa (XFCE4), truy cập từ xa qua VNC hoặc noVNC. Hỗ trợ chạy trên Termux, Github codespaces
-🚀 Tính năng
-Cài XFCE4 cực nhanh, tối ưu cho máy yếu.
+# Setup giao diện XFCE4 + VNC + Firefox trên Termux (không root)🛠️
 
-Hỗ trợ truy cập bằng VNC Viewer hoặc trình duyệt web (noVNC).
+Đây là hướng dẫn cài giao diện Linux (XFCE4) trên Termux bằng VNC. Hỗ trợ chạy Firefox và phần mềm có giao diện GUI khác. Không cần root máy.
 
-chỉ cần truy cập localhost:8080 (trên Termux) vps cần mở port hoặc dùng cloud flared
+---
 
-Tự động cài trình duyệt (Firefox).
+## Yêu cầu😈
 
-Full auto. Chỉ cần chọn vùng và bàn phím.
-📦 Các script chính
-Tên Script	Mô tả
-termux.sh	Dành cho Termux Android, setup Ubuntu GUI + noVNC.
-setup.sh	Setup cơ bản Ubuntu Desktop trên VPS/máy ảo bình thường.
-🛠️ Cách sử dụng nhanh
-Termux:
-pkg update && pkg install -y wget
+- Cài Termux từ F-Droid(https://f-droid.org/packages/com.termux/)
+- Có mạng ổn định
+- Android chưa root cũng chạy được
+
+---
+
+## Cách cài đặt👻
+
+### 1. Mở Termux và chạy lệnh sau:
+
+pkg update && pkg upgrade -y
+pkg install wget -y
 wget https://raw.githubusercontent.com/nam2010-pp/PC/main/termux.sh
 bash termux.sh
-VPS Ubuntu(github codespaces,...)
-wget https://raw.githubusercontent.com/nam2010-pp/PC/main/setup.sh
-bash setup.sh
-🔥 Ghi chú
-Mật khẩu VNC:tạo lúc vnc hỏi 
 
-Nếu chạy trong VPS cần mở port để truy cập
+Mở giao diện
+Cài ứng dụng VNC Viewer trên CH Play
 
-Nếu noVNC bị lỗi, chỉ cần dùng app VNC Viewer kết nối IP + cổng là ok.
+Mở VNC Viewer, bấm dấu+ nhập localhost:1
+Bấm "Create", sau đó "Connect"
+
+Nhập mật khẩu (do bạn đặt lúc chạy vncserver :1 lần đầu)
+Tắt giao diện
+Để tắt vncserver nhập:     vncserver -kill :1
+*Ghi chú*
+Firefox sẽ có sẵn trên Desktop sau khi chạy xong.
+Tác giả🛠️
+Script bởi Nam.
+Dành cho ai thích nghịch Termux, máy ảo, giao diện Linux không cần root.
