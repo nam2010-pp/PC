@@ -4,6 +4,7 @@ echo "[+] Cập nhật và cài gói cần thiết..."
 pkg update -y && pkg upgrade -y
 pkg install -y x11-repo
 pkg install -y tigervnc xfce4 xfce4-goodies firefox git wget
+
 echo "[+] Cấu hình VNC và XFCE4..."
 mkdir -p ~/.vnc
 cat > ~/.vnc/xstartup <<'EOF'
@@ -35,17 +36,15 @@ Terminal=false
 Type=Application
 Categories=Network;WebBrowser;
 EOF
+
 cp ~/.local/share/applications/firefox.desktop ~/Desktop/
 chmod +x ~/Desktop/firefox.desktop
 
 echo "[+] Khởi động lại VNC..."
 vncserver :1
 
-echo "[+] mở display"
-DISPLAY=:1 1080x720
 echo
-echo "✅ XONG! Truy cập giao diện tại:"
+echo "✅ DONE! Truy cập GUI bằng VNC client với IP localhost:5901"
 echo
-echo "🛑 Để tắt:"
-echo "    vncserver -kill :1
-echo
+echo "🛑 Để tắt VNC:"
+echo "    vncserver -kill :1"
