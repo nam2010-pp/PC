@@ -4,11 +4,6 @@ echo "[+] Cập nhật và cài gói cần thiết..."
 pkg update -y && pkg upgrade -y
 pkg install -y x11-repo
 pkg install -y tigervnc xfce4 xfce4-goodies firefox git wget
-
-echo "[+] Cài đặt noVNC..."
-git clone https://github.com/novnc/noVNC.git ~/noVNC
-chmod +x ~/noVNC/utils/novnc_proxy
-
 echo "[+] Cấu hình VNC và XFCE4..."
 mkdir -p ~/.vnc
 cat > ~/.vnc/xstartup <<'EOF'
@@ -20,7 +15,7 @@ chmod +x ~/.vnc/xstartup
 
 echo "[+] Khởi tạo VNC lần đầu..."
 vncserver :1
-sleep 2
+sleep 10
 vncserver -kill :1
 
 echo "[+] Tải icon Firefox..."
@@ -46,13 +41,11 @@ chmod +x ~/Desktop/firefox.desktop
 echo "[+] Khởi động lại VNC..."
 vncserver :1
 
-echo "[+] Mở noVNC proxy..."
-DISPLAY=:1 ~/noVNC/utils/novnc_proxy --vnc localhost:5901 --listen 6080 &
-
+echo "[+] mở display"
+DISPLAY=:1 1280x720
 echo
 echo "✅ XONG! Truy cập giao diện tại:"
-echo "    http://localhost:6080/vnc.html"
 echo
 echo "🛑 Để tắt:"
-echo "    vncserver -kill :1 && pkill -f novnc_proxy"
+echo "    vncserver -kill :1
 echo
