@@ -44,7 +44,7 @@ echo "[+] Khởi động lại VNC..."
 vncserver :1
 
 echo
-echo "✅ DONE! Truy cập GUI bằng VNC client với IP localhost:5901"
+echo "✅ DONE! Truy cập GUI bằng VNC client với IP localhost:1"
 echo
 echo "🛑 Để tắt VNC:"
 echo "    vncserver -kill :1"
