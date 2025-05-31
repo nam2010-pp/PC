@@ -40,8 +40,13 @@ EOF
 cp ~/.local/share/applications/firefox.desktop ~/Desktop/
 chmod +x ~/Desktop/firefox.desktop
 
-echo "[+] Khởi động lại VNC..."
-vncserver :1
+echo "[+] Tạo vnc.sh để reset nhanh VNC..."
+cat > ~/vnc.sh <<'EOF'
+#!/data/data/com.termux/files/usr/bin/bash
+echo "[~] Đang reset VNC..."
+vncserver -kill :1 && vncserver :1
+EOF
+chmod +x ~/vnc.sh
 
 echo
 echo "✅ DONE! Truy cập GUI bằng VNC client với IP localhost:1"
